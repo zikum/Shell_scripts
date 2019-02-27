@@ -1,6 +1,7 @@
 #!/bin/bash
 #Generates Let's Encrypt requests for selected domains using Webmin LLet's Encrypt subsystem 
 #Addressing issue in Webmin/Virtualmin with Let's Encrypt auto renew function (just workaround)
+#Intended to be run via crontab within reasonable period (once per two months)
 #v0.1 - initial quick version
 
 #Get fresh list of domains with SSL enabled (master domains, subservers and aliases)
@@ -11,10 +12,9 @@ echo "$Domains" > Domains.list
 
 #Request certificate for each domain
 
-while IFS= read -r var
+while IFS= read -r domain
 do
-echo kricim: "$var"
+virtualmin generate-letsencrypt-cert --domain "$domain"
 done < "Domains.list"
 
-#Generate certificate requests
-#virtualmin generate-letsencrypt-cert --domain $Domain
+exit
