@@ -17,7 +17,7 @@
 # verze 1.12: Uprava backupu: Kvuli problemu pri vytvareni zalohy pod user accountem (nekdy dochazelo k vycerpani quoty a zaloha diky tomu selhala) je nyni zaloha vytvarena pod userem root.
 # verze 1.13: Zmena prav na backupy, automaticky mount backup slozky do home slozky usera (virtualmin-backup) - Zajistuje moznost stahnout backup primo z FTP
 # verze 1.14: 17.11.2015 pridana podpora pro LetsEncrypt - automaticke generovani certifikatu, automaticke obnovovani. Revokace zatim manualne. Pridano pro Hosting Web a Web Plus.
-# verze 1.15: Workaround - po upgrade na Debian 8.2 a Apache 2.4 se musi provest prepis <Virtualhost na IP> jinak prostredi nefunguje spravne.
+# verze 1.15: Rewrite of <virtualHost> with actual IPv4 address assigned to server (because of new FW settings)
 # verze 1.16: Prepracovan sync pro Geek hosting. Finalne funkcni obousmerny sync JAIL home <> system home
 # Verze 1.17 (11.9.2016): Opravena chyba v zapisu do backup scriptu. Ted se jeste pred tim zjistuje, zda jde o TOP level server, nebo child server.
 # Version 1.18 (3.3.2019): Auto detection of actual IPv4 address Added.  
