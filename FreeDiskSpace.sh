@@ -1,7 +1,7 @@
 #!/bin/bash
 # Check for free space in all logging FS.
 # When free space drops below set threshold it deletes all defined files in given paths
-# v0.1 - initial draft
+# v1.0 - Final basic version
 
 # Set treshold in %
 TRESHOLD=40
