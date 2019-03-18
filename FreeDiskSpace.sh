@@ -1,22 +1,38 @@
 #!/bin/bash
-# Check for free space in defined FS.
-# When free space drops below set threshold it deletes all *.gz files in given paths
+# Check for free space in all logging FS.
+# When free space drops below set threshold it deletes all defined files in given paths
 # v0.1 - initial draft
 
-# FS to watch
-FILESYSTEM=/dev/sda1
-# Capacity threshold in %
-CAPACITY=95
-# Dirs to be cleaned
-/srv/log/<env>/mep/*/application/
+# Set treshold in %
+TRESHOLD=40
+# Dir with log files
+DIRLOG=/application/
+#Files to delete
+FILES=*.gz
 
 
-files:  .gz .json .log
+# Watch all logging FS for threshold. If its okay, then just do nothing and exit... Else, parse them and CLEAN them!
+FILESYSTEMS=$(df -P 2> /dev/null |grep log |awk '0+$5 >= '$TRESHOLD' {print}' |awk '{ print $6 }')
+
+if [ "$FILESYSTEMS" = "" ]; then
+    echo "No FS met treshold - All okay exiting...";
+
+exit 1;
+
+else
+
+# Save results, add app log dir and file extension
+FSOVERTRESHOLD=$FILESYSTEMS
+
+FILESTODELETE=$(while read -r line; do
+	    		echo "$line$DIRLOG"
+		done <<< "$FSOVERTRESHOLD")
 
 
-for i in $(find /srv/log -type d -name "fed" 2>/dev/null | awk -F/ '{print $4}'); do echo "${i} environment"; done
+# CLEAN files!
+	while read -r file; do
+			echo deleting files: $FILES from: "$file"
+			find "$file" -name $FILES -type f -delete
+		done <<< "$FILESTODELETE"
 
-
-
-
-
+fi
