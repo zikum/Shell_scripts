@@ -5,7 +5,7 @@
 #v0.1 - initial quick version without logging
 
 #Get fresh list of domains with SSL enabled (master domains, subservers and aliases)
-Domains=`virtualmin list-domains --with-feature ssl |awk '{print $1}' |tail -n+3`
+Domains=`virtualmin list-domains --with-feature web |awk '{print $1}' |tail -n+3`
 
 #Save the output
 echo "$Domains" > Domains.list
